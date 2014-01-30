@@ -16,7 +16,9 @@ define([
     var newUserGuide = Backbone.View.extend({
         
         events:{
-            'click .new_user_guide':'new_user_event'
+            'click .new_user_guide':'new_user_event',
+            'mouseover #create_group_button':'createListHover',
+            "click #create_group_button":'createButtonClick'
         },
         
         tooltips: [
@@ -43,7 +45,7 @@ define([
                 });
             }
             setTimeout(function(){
-                $(newEid).opentip(message, {     showOn: "mouseover",
+                $(newEid).opentip(message, {  showOn: "mouseover",
                                               hideOn: "click",
                                               target:$(eId),
                                               tipJoint:"left",
@@ -58,6 +60,25 @@ define([
         
         new_user_event: function(e) {
             Common.vent.trigger("new_user_start");
+        },
+        
+        createListHover: function(e){
+            $(e.target).opentip("Click here to create.", {showOn: "creation",
+                                                          hideOn: "click",
+                                                          target:$(e.target),
+                                                          tipJoint:"top left",
+                                                          style:"dark"});
+        },
+        
+        createButtonClick: function(e){
+            setTimeout(function(){
+                var create_button = $("button:contains('Create')[type='button']");
+                create_button.opentip("Finalize and save.", {showOn: "creation",
+                                                              hideOn: "click",
+                                                              target:create_button,
+                                                              tipJoint:"top left",
+                                                              style:"dark"});
+            },1000);
         },
         
         makeid: function (){
