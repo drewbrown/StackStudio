@@ -227,7 +227,8 @@ module.exports = function(grunt) {
                     "css/jquery.multiselect.css": "css/jquery.multiselect.less",
                     "css/jquery.multiselect.filter.css": "css/jquery.multiselect.filter.less",
                     "css/jquery-ui.css": "css/jquery-ui.less",
-                    "css/morris.css": "css/morris.less"
+                    "css/morris.css": "css/morris.less",
+                    "css/opentip.css": "css/opentip.less"
                   }
                 }
               }

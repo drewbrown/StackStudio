@@ -29,10 +29,11 @@ define([
         'views/account/devOpsToolsManagementView',
         'views/account/continuousIntegrationManagementView',
         'views/account/sourceControlRepositoryManagementListView',
+        'views/account/newUserGuide',
         'jquery-plugins',
         'jquery-ui-plugins',
         'jquery.jstree'
-], function( $, _, Backbone, Common, managementTemplate, Groups, CloudCredentials, CloudAccounts, Policies, NewLoginView, CloudAccountManagementView, CloudCredentialManagementView, CloudCredentialManagementListView, CloudAccountManagementListView, UsersManagementView, PoliciesManagementView, PolicyManagementView, HomeView, GroupsManagementView, GroupsManagementListView, DevOpsToolsManagementView, ContinuousIntegrationManagementView, SourceControlRepositoryManagementListView ) {
+], function( $, _, Backbone, Common, managementTemplate, Groups, CloudCredentials, CloudAccounts, Policies, NewLoginView, CloudAccountManagementView, CloudCredentialManagementView, CloudCredentialManagementListView, CloudAccountManagementListView, UsersManagementView, PoliciesManagementView, PolicyManagementView, HomeView, GroupsManagementView, GroupsManagementListView, DevOpsToolsManagementView, ContinuousIntegrationManagementView, SourceControlRepositoryManagementListView, NewUserGuide ) {
     var AccountManagementView = Backbone.View.extend({
         /** @type {String} DOM element to attach view to */
         el: "#main",
@@ -63,6 +64,8 @@ define([
             this.subViews = [];
             //Render my template
             this.$el.html(this.template);
+            
+            this.new_user_guide = new NewUserGuide({el:this.el});
             
             this.groups = new Groups();
             this.groups.on('reset', this.addAllGroups, this);

@@ -143,7 +143,8 @@ requirejs.config({
         'bootstrap': '//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min',
         'typeahead': '../vendor/twitter/typeahead',
         'ace': '//cdnjs.cloudflare.com/ajax/libs/ace/1.1.01/ace',
-        'mode-json': '//cdnjs.cloudflare.com/ajax/libs/ace/1.1.01/mode-json'
+        'mode-json': '//cdnjs.cloudflare.com/ajax/libs/ace/1.1.01/mode-json',
+        'opentip':'//cdn.jsdelivr.net/opentip/2.4.6/opentip-jquery-excanvas.min'
     }
 });
 
