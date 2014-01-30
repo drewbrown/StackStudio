@@ -16,32 +16,39 @@ define([
     var newUserGuide = Backbone.View.extend({
         
         tooltips: [
-            {eId:'c_account_tip', message:'Create a Cloud Account to configure a connection to a cloud.', hideVent:'managementRefresh'},
-            {eId:'c_cred_tip', message:'Create a Cloud Credential to supply security credentials for use in a cloud.', hideVent:'managementRefresh'}
+            {showVent:"newUserGuide", eId:'#c_account_tip', message:'Create a Cloud Account to configure a connection to a cloud.', hideVent:'managementRefresh'},
+            {showVent:'managementRefresh', eId:'#c_cred_tip', message:'Create a Cloud Credential to supply security credentials for use in a cloud.', hideVent:'cloudCredentialCreated'},
+            {showVent:'cloudCredentialCreated', eId:'#resources_nav', message:'See your cloud resources in Cloud Management.', hideVent:undefined}
         ],
         
         initialize: function() {
             var view = this;
-            var ttList = this.tooltips.reverse();
-            var callback;
-            ttList.forEach(function(t){
-                callback = function(){view.create_tooltip(t['eId'],t['message'],t['hideVent'],callback);};
+            this.tooltips.reverse().forEach(function(t){
+                view.create_tooltip(t['showVent'],t['eId'],t['message'],t['hideVent']);
             });
-            callback();
+            setTimeout(function(){
+                Common.vent.trigger("newUserGuide");
+            },2000);
         },
         
-        create_tooltip: function(eId,message,hideVent,callback){
+        create_tooltip: function(showVent,eId,message,hideVent){
+            if(showVent !== undefined){
+                Common.vent.on(showVent, function(){
+                    $(eId).mouseover();
+                });
+            }
             setTimeout(function(){
-                $('#'+eId).opentip(message, { showOn: "creation",
+                $(eId).opentip(message, {     showOn: "mouseover",
                                               hideOn: "click",
-                                              target:$('#'+eId),
+                                              target:$(eId),
                                               tipJoint:"left",
                                               style:"dark"});
             }, 1000);
-            Common.vent.on(hideVent, function(){
-                $('#'+eId).click();
-                callback();
-            });
+            if(hideVent !== undefined){
+                Common.vent.on(hideVent, function(){
+                    $(eId).click();
+                });
+            }
         }
          
     });
