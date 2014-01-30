@@ -17,7 +17,7 @@ define([
         
         events:{
             'click .new_user_guide':'new_user_event',
-            'mouseover #create_group_button':'createListHover',
+            'click #c_account_tip,#c_cred_tip':'createListHover',
             "click #create_group_button":'createButtonClick'
         },
         
@@ -63,15 +63,18 @@ define([
         },
         
         createListHover: function(e){
-            $(e.target).opentip("Click here to create.", {showOn: "creation",
-                                                          hideOn: "click",
-                                                          target:$(e.target),
-                                                          tipJoint:"top left",
-                                                          style:"dark"});
+            setTimeout(function(){
+                $("#create_group_button").opentip("Click here to create.", {showOn: "creation",
+                                                              hideOn: "click",
+                                                              target:$("#create_group_button"),
+                                                              tipJoint:"top left",
+                                                              style:"dark"});
+            },1000);
         },
         
         createButtonClick: function(e){
             setTimeout(function(){
+                //Opentip.lastZIndex = 1002;
                 var create_button = $("button:contains('Create')[type='button']");
                 create_button.opentip("Finalize and save.", {showOn: "creation",
                                                               hideOn: "click",
