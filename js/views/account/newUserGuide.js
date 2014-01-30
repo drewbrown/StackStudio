@@ -15,8 +15,12 @@ define([
 
     var newUserGuide = Backbone.View.extend({
         
+        events:{
+            'click .new_user_guide':'new_user_event'
+        },
+        
         tooltips: [
-            {showVent:"newUserGuide", eId:'#c_account_tip', message:'Create a Cloud Account to configure a connection to a cloud.', hideVent:'managementRefresh'},
+            {showVent:"new_user_start", eId:'#c_account_tip', message:'Create a Cloud Account to configure a connection to a cloud.', hideVent:'managementRefresh'},
             {showVent:'managementRefresh', eId:'#c_cred_tip', message:'Create a Cloud Credential to supply security credentials for use in a cloud.', hideVent:'cloudCredentialCreated'},
             {showVent:'cloudCredentialCreated', eId:'#resources_nav', message:'See your cloud resources in Cloud Management.', hideVent:undefined}
         ],
@@ -26,9 +30,6 @@ define([
             this.tooltips.reverse().forEach(function(t){
                 view.create_tooltip(t['showVent'],t['eId'],t['message'],t['hideVent']);
             });
-            setTimeout(function(){
-                Common.vent.trigger("newUserGuide");
-            },2000);
         },
         
         create_tooltip: function(showVent,eId,message,hideVent){
@@ -49,6 +50,10 @@ define([
                     $(eId).click();
                 });
             }
+        },
+        
+        new_user_event: function(e) {
+            Common.vent.trigger("new_user_start");
         }
          
     });

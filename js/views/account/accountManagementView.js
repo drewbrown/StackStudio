@@ -24,6 +24,7 @@ define([
         'views/account/policiesManagementView',
         'views/account/policyManagementView',
         'views/account/homeView',
+        'views/account/newUserView',
         'views/account/groupsManagementView',
         'views/account/groupsManagementListView',
         'views/account/devOpsToolsManagementView',
@@ -33,7 +34,7 @@ define([
         'jquery-plugins',
         'jquery-ui-plugins',
         'jquery.jstree'
-], function( $, _, Backbone, Common, managementTemplate, Groups, CloudCredentials, CloudAccounts, Policies, NewLoginView, CloudAccountManagementView, CloudCredentialManagementView, CloudCredentialManagementListView, CloudAccountManagementListView, UsersManagementView, PoliciesManagementView, PolicyManagementView, HomeView, GroupsManagementView, GroupsManagementListView, DevOpsToolsManagementView, ContinuousIntegrationManagementView, SourceControlRepositoryManagementListView, NewUserGuide ) {
+], function( $, _, Backbone, Common, managementTemplate, Groups, CloudCredentials, CloudAccounts, Policies, NewLoginView, CloudAccountManagementView, CloudCredentialManagementView, CloudCredentialManagementListView, CloudAccountManagementListView, UsersManagementView, PoliciesManagementView, PolicyManagementView, HomeView, NewUserView, GroupsManagementView, GroupsManagementListView, DevOpsToolsManagementView, ContinuousIntegrationManagementView, SourceControlRepositoryManagementListView, NewUserGuide ) {
     var AccountManagementView = Backbone.View.extend({
         /** @type {String} DOM element to attach view to */
         el: "#main",
@@ -386,6 +387,17 @@ define([
                         accountManagementView.subApp.close();
                     }
                     accountManagementView.subApp = new HomeView({rootView: accountManagementView});
+                }
+                break;
+            case "newuser":
+                if(accountManagementView.subApp instanceof NewUserView)
+                {
+                    //do nothing
+                }else{
+                    if(accountManagementView.subApp !== undefined){
+                        accountManagementView.subApp.close();
+                    }
+                    accountManagementView.subApp = new NewUserView({rootView: accountManagementView});
                 }
                 break;
         }

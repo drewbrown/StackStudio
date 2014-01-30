@@ -124,12 +124,13 @@ define([
                 
                 console.log("session login:" + sessionStorage.login);
                 Common.vent.trigger("loginSuccess");
+                
                 if(data.account.cloud_credentials && data.account.cloud_credentials.length > 0) {
                     Common.router.navigate("#resources", {trigger: true});
                 }else {
                     Common.router.navigate("#account/management/home", {trigger: true});
                 }
-
+                Common.router.navigate("#account/management/newuser", {trigger: true});
             }else {
                 Common.errorDialog("Browser Issue", "Your browser does not support web storage.");
             }
