@@ -27,19 +27,23 @@ define([
         
         initialize: function() {
             var view = this;
-            this.tooltips.reverse().forEach(function(t){
+            this.tooltips.forEach(function(t){
                 view.create_tooltip(t['showVent'],t['eId'],t['message'],t['hideVent']);
             });
         },
         
         create_tooltip: function(showVent,eId,message,hideVent){
+            var newId = this.makeid();
+            $("#guide_element").append("<div id='"+newId+"'></div>");
+            var newEid = "#"+newId;
+            
             if(showVent !== undefined){
                 Common.vent.on(showVent, function(){
-                    $(eId).mouseover();
+                    $(newEid).mouseover();
                 });
             }
             setTimeout(function(){
-                $(eId).opentip(message, {     showOn: "mouseover",
+                $(newEid).opentip(message, {     showOn: "mouseover",
                                               hideOn: "click",
                                               target:$(eId),
                                               tipJoint:"left",
@@ -47,13 +51,24 @@ define([
             }, 1000);
             if(hideVent !== undefined){
                 Common.vent.on(hideVent, function(){
-                    $(eId).click();
+                    $(newEid).click();
                 });
             }
         },
         
         new_user_event: function(e) {
             Common.vent.trigger("new_user_start");
+        },
+        
+        makeid: function (){
+            var text = "";
+            var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+            for( var i=0; i < 5; i++ ){
+                text += possible.charAt(Math.floor(Math.random() * possible.length));
+            }
+
+            return text;
         }
          
     });
