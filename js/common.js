@@ -113,6 +113,10 @@ requirejs.config({
         },
         'URIjs': {
 
+        },
+        'opentip': {
+            deps: ['jquery'],
+            exports: 'Opentip'
         }
     },
     paths: {

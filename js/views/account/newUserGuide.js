@@ -11,7 +11,7 @@ define([
         'backbone',
         'common',
         'opentip'
-], function( $, _, Backbone, Common) {
+], function( $, _, Backbone, Common, Opentip) {
 
     var newUserGuide = Backbone.View.extend({
         
@@ -74,7 +74,7 @@ define([
         
         createButtonClick: function(e){
             setTimeout(function(){
-                //Opentip.lastZIndex = 1002;
+                Opentip.lastZIndex = 1002;
                 var create_button = $("button:contains('Create')[type='button']");
                 create_button.opentip("Finalize and save.", {showOn: "creation",
                                                               hideOn: "click",
