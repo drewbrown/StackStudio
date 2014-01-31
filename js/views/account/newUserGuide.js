@@ -24,7 +24,7 @@ define([
         tooltips: [
             {showVent:"new_user_start", eId:'#c_account_tip', message:'Create a Cloud Account to configure a connection to a cloud.', hideVent:'managementRefresh'},
             {showVent:'managementRefresh', eId:'#c_cred_tip', message:'Create a Cloud Credential to supply security credentials for use in a cloud.', hideVent:'cloudCredentialCreated'},
-            {showVent:'cloudCredentialCreated', eId:'#resources_nav', message:'See your cloud resources in Cloud Management.', hideVent:undefined}
+            {showVent:'cloudCredentialCreated', eId:'#resources_nav', message:'See your cloud resources in Cloud Management.', hideVent:"GuideComplete"}
         ],
         
         initialize: function() {
@@ -42,10 +42,15 @@ define([
             if(showVent !== undefined){
                 Common.vent.on(showVent, function(){
                     $(newEid).mouseover();
+                    setTimeout(function(){
+                        $( "#"+hideVent ).on( "click", function() {
+                          Common.vent.trigger(hideVent);
+                        });
+                    },1000);
                 });
             }
             setTimeout(function(){
-                $(newEid).opentip(message, {  showOn: "mouseover",
+                $(newEid).opentip(message+"<button id='"+hideVent+"' class='btn btn-default btn-xs' style='float:right;'>skip</button>", {  showOn: "mouseover",
                                               hideOn: "click",
                                               target:$(eId),
                                               tipJoint:"left",
