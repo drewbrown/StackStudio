@@ -59,7 +59,7 @@ define([
             Common.vent.on("cloudAccountUpdated", function() {
                 thisView.render();
             });
-            $("input").addClass("form-control");
+            
             this.render();
         },
 
@@ -187,7 +187,7 @@ define([
         },
         
         newCloudService: function(){
-            var CloudServiceCreateView = this.CloudServiceCreateView;
+            var CloudServiceCreateView = CloudServiceCreate;
             
             this.newResourceDialog = new CloudServiceCreateView({ cloud_account: this.selectedCloudAccount});
             

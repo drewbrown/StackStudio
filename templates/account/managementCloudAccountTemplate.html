@@ -6,42 +6,55 @@
             <div>Cloud Account: &nbsp;<b id="services_tab" href="#services_page">Cloud Account</b></div>
             <div>Cloud Provider: <b id="cloud_provider_label">Cloud Provider</b></div>
             <br/>
-            <div id="auth_url_div">
-                Auth URL: &nbsp;<input id="auth_url_input" style="width:300px;"></input>
-                <button id="update_auth_url_button" class="btn btn-success">Update</button>
+            <div id="auth_url_div" class="col-lg-6">
+                Auth URL: &nbsp;
+                <div class="input-group">
+                  <input id="auth_url_input" type="text" class="form-control"></input>
+                  <span class="input-group-btn">
+                    <button id="update_auth_url_button" class="btn btn-default" type="button">Update</button>
+                  </span>
+                </div>
             </div>
             <br/>
-            <div id="default_region_div">
-                Default Region: &nbsp;<input id="default_region_input" style="width:300px;"></input>
-                <button id="default_region_button" class="btn btn-success">Update</button>
+            <br/>
+            <br/>
+            <div id="default_region_div" class="col-lg-6">
+                Default Region: &nbsp;
+                <div class="input-group">
+                  <input id="default_region_input" type="text" class="form-control"></input>
+                  <span class="input-group-btn">
+                    <button id="default_region_button" class="btn btn-default" type="button">Update</button>
+                  </span>
+                </div>
             </div>
-        </div>
-        <div class="row" style="padding: 10px 10px;">
-            <button id="new_cloud_service" class="btn btn-primary">Add Service</button>
         </div>
         <div id="services_page">
         </div>
+        <div class="row" style="float:right;padding-right: 4.6em;">
+            <button id="new_cloud_service" class="btn btn-primary">Add Service</button>
+        </div>
+        <br/>
         <div id="account_managers_page">
             <legend>Configuration Manager Endpoints</legend>
             <p>
                 <label class="tabbed-field">Chef:</label>
                 <select id="chef_select" class="config-manager-select" style="width:200px"/>
-                <button class="save-manager btn btn-success">Save</button>
+                <button class="save-manager btn btn-default">Save</button>
             </p>
             <p>
                 <label class="tabbed-field">Puppet:</label>
                 <select id="puppet_select" class="config-manager-select" style="width:200px"/>
-                <button class="save-manager btn btn-success">Save</button>
+                <button class="save-manager btn btn-default">Save</button>
             </p>
             <p>
                 <label class="tabbed-field">Salt:</label>
                 <select id="salt_select" class="config-manager-select" style="width:200px"/>
-                <button class="save-manager btn btn-success">Save</button>
+                <button class="save-manager btn btn-default">Save</button>
             </p>
             <p>
                 <label class="tabbed-field">Ansible:</label>
                 <select id="ansible_select" class="config-manager-select" style="width:200px"/>
-                <button class="save-manager btn btn-success">Save</button>
+                <button class="save-manager btn btn-default">Save</button>
             </p>
         </div>
         <!--
@@ -60,9 +73,13 @@
             {{#cloud_services}}
             <p>
                 <label class="tabbed-field">{{cloud_service.service_type}} Endpoint URL:</label>
-                <input data-id="{{cloud_service.id}}" type="text" data-name="{{cloud_service.service_type}}" class="textbox-300 form-control" value="{{cloud_service.protocol}}://{{cloud_service.host}}:{{cloud_service.port}}{{cloud_service.path}}"></input>
-                <button class="delete-button btn btn-danger">Delete</button>
-                <button class="save-button btn btn-success">Save</button>
+                <div class="input-group col-lg-6">
+                  <input data-id="{{cloud_service.id}}" type="text" data-name="{{cloud_service.service_type}}" class="textbox-300 form-control" value="{{cloud_service.protocol}}://{{cloud_service.host}}:{{cloud_service.port}}{{cloud_service.path}}"></input>
+                </div>
+                <span class="btn-group">
+                  <button class="save-button btn btn-default" type="button">Save</button>
+                  <button class="delete-button btn btn-danger" type="button">Delete</button>
+                </span>
             </p>
             {{/cloud_services}}
             {{^cloud_services}}
