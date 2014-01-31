@@ -72,8 +72,8 @@ define([
                 }
             });
 
-            if(this.selectedCloudAccount) {
-                this.renderAccountAttributes();
+            if(this.rootView.treeCloudAccount){
+                this.treeSelectCloudAccount();
             }
         },
 
@@ -155,8 +155,7 @@ define([
                 $("#auth_url_div").hide();
                 $("#default_region_div").hide();
             }
-            
-            this.render();
+            this.renderAccountAttributes();
         },
 
         saveService: function(event) {
