@@ -8,7 +8,7 @@
 define([
         'jquery',
         'backbone',
-        '/js/aws/models/vpc/awsRouteTable.js',
+        'aws/models/vpc/awsRouteTable',
         'common'
 ], function( $, Backbone, RouteTable, Common ) {
     'use strict';
@@ -21,7 +21,7 @@ define([
         // Reference to this collection's model.
         model: RouteTable,
 
-        url: 'samples/routeTables.json'
+        url: Common.apiUrl + '/stackstudio/v1/cloud_management/aws/compute/route_tables'
     });
 
     // Create our global collection of **RouteTables**.

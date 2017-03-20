@@ -34,10 +34,10 @@ define([
 
         initialize: function() {
             this.$el.html(this.template);
-            $("#service_menu").html(this.$el);
         },
 
         render: function(options) {
+            $("#service_menu").html(this.$el);
             $("#subservice_menu_list").empty();
             if(options) {
                 this.service = options.service;
@@ -54,14 +54,21 @@ define([
                 });
             }
             this.openMenu();
-
+            this.delegateEvents();
         },
 
         selectSubService: function( click ) {
+            var viewOptions = [
+                this.cloudProvider,
+                this.region,
+                this.service.type,
+                click.target.id
+            ].filter(Boolean);
+            var route = ['#resources'].concat(viewOptions).join('/');
+
             this.clearSelection();
             $(click.target).addClass("selected_item");
-
-            Common.router.navigate("#resources/"+this.cloudProvider+"/"+this.region+"/"+this.service.type+"/"+click.target.id, {trigger: true});
+            Common.router.navigate(route, {trigger: true});
         },
 
         clearSelection: function() {
@@ -82,7 +89,6 @@ define([
 
         openMenu: function() {
             //$("#resource_app").width("890px");
-
             $("#resource_app").addClass("service_width");
             $("#resource_app").removeClass("full_width");
             $("#subservice_menu").show();

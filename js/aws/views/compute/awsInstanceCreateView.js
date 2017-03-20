@@ -11,12 +11,12 @@ define([
         'backbone',
         'views/dialogView',
         'text!templates/aws/compute/awsInstanceCreateTemplate.html',
-        '/js/aws/models/compute/awsInstance.js',
-        '/js/aws/collections/compute/awsImages.js',
-        '/js/aws/collections/compute/awsAvailabilityZones.js',
-        '/js/aws/collections/compute/awsFlavors.js',
-        '/js/aws/collections/compute/awsKeyPairs.js',
-        '/js/aws/collections/compute/awsSecurityGroups.js',
+        'aws/models/compute/awsInstance',
+        'aws/collections/compute/awsImages',
+        'aws/collections/compute/awsAvailabilityZones',
+        'aws/collections/compute/awsFlavors',
+        'aws/collections/compute/awsKeyPairs',
+        'aws/collections/compute/awsSecurityGroups',
         'common',
         'jquery.multiselect',
         'jquery.multiselect.filter'
@@ -86,14 +86,14 @@ define([
                 }
             });
             $("#accordion").accordion();
-            $("#radio").buttonset();  
+            $("#radio").buttonset();
             $("#security_group_select").multiselect({
                 selectedList: 3,
                 noneSelectedText: "Select Security Group(s)"
             }).multiselectfilter();
             
-            if(JSON.parse(sessionStorage.group_policies).length > 0){
-                this.addPolicyImages(JSON.parse(sessionStorage.group_policies));
+            if(Common.account.group_policies.length > 0){
+                this.addPolicyImages(Common.account.group_policies);
             }
             this.images.on( 'reset', this.addAllImages, this );
             this.images.fetch({reset: true});

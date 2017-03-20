@@ -5,58 +5,68 @@
  */
 /*jshint smarttabs:true */
 /*global define:true console:true alert:true*/
-define([
-        'jquery',
-        'underscore',
-        'backbone',
+define(
+    [
+        //'jquery',
+        //'underscore',
+        //'backbone',
         'common',
         'text!templates/dashboard.html',
         'FeedEk'
-], function( $, _, Backbone, Common, dashboardTemplate, FeedEk ) {
+    ],
+    function( Common, dashboardTemplate, FeedEk ) {
+        var $ = Common.jquery;
+        var _ = Common.underscore;
+        var Backbone = Common.backbone;
+
+        var DashboardView = Backbone.View.extend({
+            el: "#main",
+            template: _.template(dashboardTemplate),
     
-    var DashboardView = Backbone.View.extend({
-        el: "#main",
-        template: _.template(dashboardTemplate),
-
-        initialize: function() {
-            this.render();
-        },
-
-        render: function() {
-            this.$el.html(this.template);
-            
-            var url = sessionStorage.rss_url;
-            if(url === "undefined" || url === "" || url === undefined){
-                url = Common.rssFeed;
+            initialize: function() {
+                this.render();
+            },
+    
+            render: function() {
+                this.$el.html(this.template);
+    
+                var url;
+                if (Common.account) {
+                  url = Common.account.rss_url;
+                } else {
+                  $('#getstarted').fadeIn();
+                  url = Common.rssFeed;
+                }
+                
+                $("#divRss").FeedEk({
+                    FeedUrl: url,
+                    MaxCount: 5,
+                    ShowDesc: true,
+                    ShowPubDate: true,
+                    DescCharacterLimit: 200,
+                    TitleLinkTarget: '_blank'
+                });
+            },
+    
+            close: function(){
+                this.$el.empty();
+                this.undelegateEvents();
+                this.stopListening();
+                this.unbind();
             }
-            
-            $("#divRss").FeedEk({
-                FeedUrl: url,
-                MaxCount: 5,
-                ShowDesc: true,
-                ShowPubDate: true,
-                DescCharacterLimit: 200,
-                TitleLinkTarget: '_blank'
-            });
-        },
+        });
 
-        close: function(){
-            this.$el.empty();
-            this.undelegateEvents();
-            this.stopListening();
-            this.unbind();
-        }
-    });
-    /** Variable to track whether view has been initialized or not */
-    var dashboardView;
+        /** Variable to track whether view has been initialized or not */
+        var dashboardView;
     
-    Common.router.on("route:dashboard", function () {
-        if (this.previousView !== dashboardView) {
-            this.unloadPreviousState();
-            dashboardView = new DashboardView();
-            this.setPreviousState(dashboardView);
-        }
-    }, Common);
+        Common.router.on("route:dashboard", function () {
+            if (this.previousView !== dashboardView) {
+                this.unloadPreviousState();
+                dashboardView = new DashboardView();
+                this.setPreviousState(dashboardView);
+            }
+        }, Common);
 
-    return DashboardView;
-});
+        return DashboardView;
+    }
+);

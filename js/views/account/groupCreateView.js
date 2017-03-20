@@ -11,9 +11,8 @@ define([
         'backbone',
         'views/dialogView',
         'text!templates/account/groupCreateTemplate.html',
-        '/js/models/group.js',
+        'models/group',
         'common'
-        
 ], function( $, _, Backbone, DialogView, groupCreateTemplate, Group, Common ) {
     
     var GroupCreateView = DialogView.extend({
@@ -57,7 +56,7 @@ define([
             if($("#group_name_input").val() !== "") {
                 options.name = $("#group_name_input").val();
                 options.description = $("#group_description_input").val();
-                newGroup.create(options,sessionStorage.login);
+                newGroup.create(options,Common.account.login);
                 this.$el.dialog('close');
             }else {
                 Common.errorDialog("Invalid Request", "Please supply all required fields.");

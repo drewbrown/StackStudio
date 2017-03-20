@@ -11,9 +11,9 @@ define([
         'backbone',
         'views/dialogView',
         'text!templates/account/cloudCredentialCreateTemplate.html',
-        '/js/collections/cloudAccounts.js',
-        '/js/collections/cloudCredentials.js',
-        '/js/models/cloudCredential.js',
+        'collections/cloudAccounts',
+        'collections/cloudCredentials',
+        'models/cloudCredential',
         'views/account/cloudCredentialFormView',
         'common'
         
@@ -26,6 +26,10 @@ define([
         cloudAccounts: new CloudAccounts(),
         
         cloudCredentials: new CloudCredentials(),
+
+        onCreated: undefined,
+
+        parentView: null,
         
         events: {
             "dialogclose": "close",
@@ -33,6 +37,10 @@ define([
         },
 
         initialize: function(options) {
+
+            if(options) {
+                this.parentView = options.rootView;
+            }
             
             this.subViews = [];
             
@@ -58,12 +66,20 @@ define([
                 }
             });
             this.render();
+            var self = this;
+
+            if(this.parentView.afterSubAppRender) {
+                //make sure other events have been bound first
+                setTimeout(function () {
+                    self.parentView.afterSubAppRender(self);
+                }, 5);
+            }
         },
 
         render: function() {
             this.cloudAccounts.on('reset', this.addCloudAccounts, this);
             this.cloudAccounts.fetch({
-                data: $.param({ org_id: sessionStorage.org_id, account_id: sessionStorage.account_id }), 
+                data: $.param({ org_id: Common.account.org_id, account_id: Common.account.id }), 
                 reset: true
             });
             
@@ -96,6 +112,10 @@ define([
             if(this.selectedCloudCredential.id === ""){
                 this.cloudCredentials.create(this.selectedCloudCredential, {cloud_account_id: this.selectedCloudAccount.id});
                 this.$el.dialog('close');
+                this.cloudCredentials.add(this.selectedCloudCredential);
+                if(this.onCreated) {
+                    this.onCreated();
+                }
             }
         },
         

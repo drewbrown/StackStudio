@@ -13,8 +13,8 @@ define([
         'icanhaz',
         'views/dialogView',
         'text!templates/openstack/network/openstackSubnetCreateTemplate.html',
-        '/js/openstack/models/network/openstackSubnet.js',
-        '/js/openstack/collections/network/openstackNetworks.js',
+        'openstack/models/network/openstackSubnet',
+        'openstack/collections/network/openstackNetworks',
         'jquery.multiselect',
         'jquery.multiselect.filter',
         'backbone.stickit'
@@ -88,7 +88,9 @@ define([
                 this.displayValid(false, "#cidr_input");
                 issue = true;
             }
-
+            if($("#subnet_name_input").val() !== "") {
+                options.name = $("#subnet_name_input").val();
+            }
             options.ip_version = $("#ip_version_select").val();
             if($("#gateway_ip_input").val() !== "") {
                 options.gateway_ip = $("#gateway_ip_input").val();

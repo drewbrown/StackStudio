@@ -18,9 +18,9 @@ define([
         sendAjaxAction: function(url, type, options, triggerString, messengerString) {
 
             /*
-            
+
             TODO: Incorporate this example to wrap our models ajax call to create messages
-            
+
             Messenger.options = {
                 extraClasses: 'messenger-fixed messenger-on-bottom messenger-on-left'
             };

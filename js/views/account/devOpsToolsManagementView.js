@@ -62,6 +62,10 @@ define([
             this.configManagers.fetch({
                 success:function(collection, response, data){
                     thisView.renderConfigManagers();
+
+                    if(thisView.rootView.afterSubAppRender) {
+                        thisView.rootView.afterSubAppRender(thisView);
+                    }
                 },
                 error:function(collection, response, data){
                     Common.errorDialog("Server Error", "Couldn't fetch config manager data.");
@@ -129,8 +133,8 @@ define([
             var groupsView = this;
             groupsView.users.fetch({success: function(){
                 var isAdmin = false;
-                if(groupsView.users.get(sessionStorage.account_id).attributes.permissions.length > 0){
-                    isAdmin = groupsView.users.get(sessionStorage.account_id).attributes.permissions[0].permission.name === "admin";
+                if(groupsView.users.get(Common.account.id).attributes.permissions.length > 0){
+                    isAdmin = groupsView.users.get(Common.account.id).attributes.permissions[0].permission.name === "admin";
                 }
                 if(!isAdmin){
                     $(".delete-button").attr("disabled", true);
@@ -143,7 +147,7 @@ define([
         },
         
         newConfigManager: function(){
-            new ConfigManagerAddEditView({configManagers: this.configManagers});
+            new ConfigManagerAddEditView({configManagers: this.configManagers, rootView : this.rootView });
         },
 
         editManager: function(event){

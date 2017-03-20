@@ -294,6 +294,10 @@
                     {
                         "name": "Ports",
                         "type": "ports"
+                    },
+                    {
+                        "name": "Routers",
+                        "type": "routers"
                     }
                 ]
             },
@@ -460,5 +464,26 @@
         "logo": "/images/CloudLogos/joyent200.jpg",
         "native_services": [],
         "regions": []
+    },
+    "vcloud" : {
+        "name" : "VCloud",
+        "logo": "/images/CloudLogos/vmware.jpg",
+        "native_services" : [
+            {
+                "name": "vApps",
+                "type": "compute",
+                "defaultSubtype": "vapps"
+            },
+            {
+                "name": "Networks",
+                "type": "network",
+                "defaultSubtype": "networks"
+            },
+            {
+                "name": "Catalogs",
+                "type": "catalog",
+                "defaultSubtype": "catalogs"
+            }
+        ]
     }
 }

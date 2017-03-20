@@ -11,14 +11,14 @@ define([
         'backbone',
         'views/resource/resourceAppView',
         'text!templates/aws/compute/awsKeyPairAppTemplate.html',
-        '/js/aws/models/compute/awsKeyPair.js',
-        '/js/aws/collections/compute/awsKeyPairs.js',
-        '/js/aws/views/compute/awsKeyPairCreateView.js',
-        '/js/aws/views/compute/awsKeyPairUploadView.js',
+        'aws/models/compute/awsKeyPair',
+        'aws/collections/compute/awsKeyPairs',
+        'aws/views/compute/awsKeyPairCreateView',
+        'aws/views/compute/awsKeyPairImportView',
         'icanhaz',
         'common',
         'jquery.dataTables'
-], function( $, _, Backbone, ResourceAppView, awsKeyPairAppTemplate, Keypair, Keypairs, AwsKeyPairCreate, AwsKeyPairUpload, ich, Common ) {
+], function( $, _, Backbone, ResourceAppView, awsKeyPairAppTemplate, Keypair, Keypairs, AwsKeyPairCreate, AwsKeyPairImport, ich, Common ) {
     'use strict';
 
     // Aws Security Group Application View
@@ -51,14 +51,21 @@ define([
         subtype: "keypairs",
         
         CreateView: AwsKeyPairCreate,
-        UploadView: AwsKeyPairUpload,
+        ImportView: AwsKeyPairImport,
         
         events: {
             'click .create_button': 'createNew',
-            'click .upload_button' : 'uploadKey',
+            'click .import_button' : 'importKey',
             'click #action_menu ul li': 'performAction',
             'click #resource_table tr': "clickOne"
         },
+
+        createText: "Create Key Pair",
+
+        actions: [
+            { text: "Import Key Pair", type: "table", cssClass: "import_button" },
+            { text: "Delete Key Pair", type: "row" }
+        ],
 
         initialize: function(options) {
             if(options.cred_id) {
@@ -67,7 +74,8 @@ define([
             if(options.region) {
                 this.region = options.region;
             }
-            this.render();
+            this.$el.html(this.template);
+            this.loadData({render: true});
             
             var keyPairApp = this;
             Common.vent.on("keyPairAppRefresh", function() {
@@ -84,14 +92,14 @@ define([
             //Disable any needed actions
         },
 
-        uploadKey: function(e) {
-            var UploadView = this.UploadView;
+        importKey: function(e) {
+            var ImportView = this.ImportView;
             if(this.region) {
-                this.uploadKeyDialog = new UploadView({cred_id: this.credentialId, region: this.region});
+                this.importKeyDialog = new ImportView({cred_id: this.credentialId, region: this.region});
             }else {
-                this.uploadKeyDialog = new UploadView({cred_id: this.credentialId});
+                this.importKeyDialog = new ImportView({cred_id: this.credentialId});
             }
-            this.uploadKeyDialog.render();
+            this.importKeyDialog.render();
         },
         
         performAction: function(event) {

@@ -8,7 +8,7 @@
 define([
         'jquery',
         'backbone',
-        '/js/aws/models/vpc/awsNetworkAcl.js',
+        'aws/models/vpc/awsNetworkAcl',
         'common'
 ], function( $, Backbone, NetworkAcl, Common ) {
     'use strict';
@@ -21,7 +21,7 @@ define([
         // Reference to this collection's model.
         model: NetworkAcl,
 
-        url: 'samples/networkAcls.json'
+        url: Common.apiUrl + '/stackstudio/v1/cloud_management/aws/compute/network_acls'
         
     });
 
